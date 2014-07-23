@@ -73,11 +73,8 @@ int main(int ac, char **ag) {
     printf("key: %s - val: %s\n", ret_k.mv_data, ret_v.mv_data);
   }
 
-  /* Get statistics for a database */
+  /* Get a database statistics */
   //MDB_stat stats;
-
-
-  //MDB_cursor_op curs_op;
 
   /* Clean the allocated resources for an opened environment */
   mdb_cursor_close(cursor);
