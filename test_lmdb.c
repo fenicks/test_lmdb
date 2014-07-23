@@ -68,10 +68,13 @@ int main(int ac, char **ag) {
   if (err != MDB_SUCCESS) {
     fprintf(stderr, "Can't open a cursor to the database: %s\n", mdb_strerror(err));
   }
+  printf("[MDB data store content]\n");
+  printf("========================\n");
   MDB_val ret_k, ret_v;
   while ((err = mdb_cursor_get(cursor, &ret_k, &ret_v, MDB_NEXT)) == MDB_SUCCESS) {
     printf("key: %s - val: %s\n", ret_k.mv_data, ret_v.mv_data);
   }
+  printf("========================\n");
 
   /* Get a database statistics */
   //MDB_stat stats;
