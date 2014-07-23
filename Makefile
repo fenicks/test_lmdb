@@ -1,5 +1,5 @@
 # Test application with LMDB database
-
+# LMDB: Lightning Memory-mapped DataBase
 ###############################################################################
 # Just a test app for playing with LMDB.
 #
@@ -11,10 +11,10 @@ LDFLAGS =
 progname = test_lmdb
 
 
-$(progname): mdb.o midl.o lmdb.h
-	$(CC) $(CFLAGS) $(progname).c -o $@ $?
+$(progname): mdb.o midl.o $(progname).o
+	$(CC) $(CFLAGS) -o $@ $?
 
-%.o: %.c
+%.o: %.c lmdb.h
 	$(CC) $(CFLAGS) $(LDFLAGS) -c $<
 
 .PHONY: clean

@@ -1,3 +1,6 @@
 test_lmdb
 *.o
 *~
+db
+toto
+testdb
