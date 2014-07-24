@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "lmdb.h"
 
@@ -48,18 +49,21 @@ int main(int ac, char **ag) {
 
   /* Handling keys and data */
   MDB_val key, value;
-  char sval[64];
 
-  key.mv_size = sizeof(int);
-  key.mv_data = sval;
+  const char * data_k[3] = {"user:1:nickname", "user:1:email"   , "user:1:created_at"};
+  const char * data_v[3] = {"fenicks"        , "fenicks@lmdb.db", "1977-04-22T06:00:00Z"};
 
-  sprintf(sval, "%03x %d First value for the first key", 1000, 1000);
-  value.mv_size = sizeof(sval);
-  value.mv_data = sval;
+  for (int iter = 0; iter < 3; ++iter) {
+    key.mv_size   = sizeof(char*) * strlen(data_k[iter]);
+    key.mv_data   = (void*)data_k[iter];
 
-  err = mdb_put(txn, dbi, &key, &value, 0);
-  if (err != MDB_SUCCESS) {
-    fprintf(stderr, "Can't add a key/value to the database: %s\n", mdb_strerror(err));
+    value.mv_size = sizeof(char*) * strlen(data_v[iter]);
+    value.mv_data = (void*)data_v[iter];
+
+    err = mdb_put(txn, dbi, &key, &value, 0);
+    if (err != MDB_SUCCESS) {
+      fprintf(stderr, "Can't add a key/value to the database: %s\n", mdb_strerror(err));
+    }
   }
 
   /* Navigation into the database */
@@ -70,14 +74,13 @@ int main(int ac, char **ag) {
   }
   printf("[MDB data store content]\n");
   printf("========================\n");
-  MDB_val ret_k, ret_v;
-  while ((err = mdb_cursor_get(cursor, &ret_k, &ret_v, MDB_NEXT)) == MDB_SUCCESS) {
-    printf("key: %s - val: %s\n", ret_k.mv_data, ret_v.mv_data);
+  while ((err = mdb_cursor_get(cursor, &key, &value, MDB_NEXT)) == MDB_SUCCESS) {
+    printf("key: %s\t- val: %s\n", (char*)key.mv_data, (char*)value.mv_data);
   }
   printf("========================\n");
 
   /* Get a database statistics */
-  //MDB_stat stats;
+  /* MDB_stat stats; */
 
   /* Clean the allocated resources for an opened environment */
   mdb_cursor_close(cursor);
@@ -85,7 +88,6 @@ int main(int ac, char **ag) {
   mdb_txn_abort(txn);
   mdb_env_close(env);
 
-  /* Easy! */
   printf("Easy, very easy isn't it?\n");
   return 0;
 }
