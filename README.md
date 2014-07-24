@@ -1,4 +1,4 @@
-# LMDB application **test_lmdb**
+# LMDB application: "test_lmdb"
 
 LMDB test application in **C**.
 
