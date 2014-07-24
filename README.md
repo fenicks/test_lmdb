@@ -27,7 +27,7 @@ You need `GCC` and `make`.
     [MDB database content]
     ======================
     key: user:1:created_at	- val: 1977-04-22T06:00:00Z
-    key: user:1:email	- val: fenicks@lmdb.db
+    key: user:1:email		- val: fenicks@lmdb.db
     key: user:1:nickname	- val: fenicks
     ======================
     [MDB database statistics]
