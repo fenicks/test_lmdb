@@ -14,16 +14,16 @@ You need `GCC` and `make`.
 
 ## Create the databases directory
 
-    mkdir $HOME/me/lmdb_databases
+    mkdir $HOME/dbs/lmdb_databases
 
 ## Run the test application
 
-    ./test_lmdb $HOME/me/lmdb_databases
+    ./test_lmdb $HOME/dbs/lmdb_databases
 
 ### Output
 
-    $ ./test_lmdb $HOME/me/lmdb_databases
-    Our data store directory is 'lmdb_databases'
+    $ ./test_lmdb $HOME/dbs/lmdb_databases
+    Our data store directory is '/home/fenicks/dbs/lmdb_databases'
     [MDB database content]
     ======================
     key: user:1:created_at	- val: 1977-04-22T06:00:00Z
