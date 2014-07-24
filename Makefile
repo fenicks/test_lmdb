@@ -5,17 +5,19 @@
 #
 
 CC      = gcc
-CFLAGS  = -W -Wall -Wabi -std=c1x -pthread -pedantic -O3
-LDFLAGS = 
+CFLAGS  = -W -Wall -Wabi -std=c1x -pedantic -O3
+LDFLAGS = -lc -pthread
 
 progname = test_lmdb
 
 
-$(progname): mdb.o midl.o $(progname).o
-	$(CC) $(CFLAGS) -o $@ $?
+all: $(progname)
 
-%.o: %.c lmdb.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $<
+$(progname): $(progname).o mdb.o midl.o lmdb.h
+	$(CC) -o $@ $^ $(LDFLAGS)
+
+%.o: %.c
+	$(CC) -c $< $(CFLAGS)
 
 .PHONY: clean
 clean:
