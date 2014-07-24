@@ -4,3 +4,4 @@ test_lmdb
 db
 toto
 testdb
+lmdb_databases
