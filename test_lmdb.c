@@ -6,24 +6,23 @@
 /**
  * Test application with LMDB database
  * > LMDB: Lightning Memory-mapped DataBase
- * #####################################################
+ * ######################################################
  * Just a test app for playing with LMDB.
  * 
- * /!\ This code is not production ready!
- * /!\ It was the best way to understand LMDB C library.
+ * /!\: This code is not production ready!
+ * /!\: It was the best way to understand LMDB C library.
  */
 
 static const char *store_dir = NULL;
 static int  err              = 0;
 
-int main(int ac, char **ag) {
+int main(int argc, char **argv) {
   /* Parse parameters */
-  if (ac != 2) {
+  if (argc != 2) {
     fprintf(stderr, "Need a parameter to specify a directory database!\n");
     return -42;
-  } else {
-    store_dir = ag[1];
   }
+  store_dir = argv[1];
   printf("Our data store directory is '%s'\n", store_dir);
 
   /* MDB environnment */
@@ -82,29 +81,29 @@ int main(int ac, char **ag) {
   /* Navigation into the database */
   MDB_cursor *cursor;
   err = mdb_cursor_open(txn, dbi, &cursor);
-  if (err != MDB_SUCCESS) {
-    fprintf(stderr, "Can't open a cursor to the database: %s\n", mdb_strerror(err));
-  } else {
+  if (err == MDB_SUCCESS) {
     printf("[MDB database content]\n");
     printf("======================\n");
     while ((err = mdb_cursor_get(cursor, &key, &value, MDB_NEXT)) == MDB_SUCCESS) {
       printf("key: %s\t- val: %s\n", (char*)key.mv_data, (char*)value.mv_data);
     }
     printf("======================\n\n");
+  } else {
+    fprintf(stderr, "Can't open a cursor to the database: %s\n", mdb_strerror(err));
   }
 
   /* Get a database statistics */
   MDB_stat stats;
   err = mdb_stat(txn, dbi, &stats);
-  if (err != MDB_SUCCESS) {
-    fprintf(stderr, "Can't retrieve the database statistics: %s\n", mdb_strerror(err));
-  } else {
+  if (err == MDB_SUCCESS) {
     printf("[MDB database statistics]\n");
     printf("=========================\n");
     printf("> Size of database page:        %u\n", stats.ms_psize);
     printf("> Depth of the B-tree:          %u\n", stats.ms_depth);
     printf("> Number of items in databases: %d\n", (int)stats.ms_entries);
     printf("=========================\n\n");
+  } else {
+    fprintf(stderr, "Can't retrieve the database statistics: %s\n", mdb_strerror(err));
   }
 
   /* Clean the allocated resources for an opened environment */
