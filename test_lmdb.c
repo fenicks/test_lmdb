@@ -45,6 +45,9 @@ int main(int ac, char **ag) {
   err = mdb_dbi_open(txn, NULL, 0, &dbi);
   if (err != MDB_SUCCESS) {
     fprintf(stderr, "Can't open a database: %s\n", mdb_strerror(err));
+    mdb_txn_abort(txn);
+    mdb_env_close(env);
+    return -42;
   }
 
   /* Handling keys and data */
@@ -71,16 +74,28 @@ int main(int ac, char **ag) {
   err = mdb_cursor_open(txn, dbi, &cursor);
   if (err != MDB_SUCCESS) {
     fprintf(stderr, "Can't open a cursor to the database: %s\n", mdb_strerror(err));
+  } else {
+    printf("[MDB database content]\n");
+    printf("======================\n");
+    while ((err = mdb_cursor_get(cursor, &key, &value, MDB_NEXT)) == MDB_SUCCESS) {
+      printf("key: %s\t- val: %s\n", (char*)key.mv_data, (char*)value.mv_data);
+    }
+    printf("======================\n");
   }
-  printf("[MDB data store content]\n");
-  printf("========================\n");
-  while ((err = mdb_cursor_get(cursor, &key, &value, MDB_NEXT)) == MDB_SUCCESS) {
-    printf("key: %s\t- val: %s\n", (char*)key.mv_data, (char*)value.mv_data);
-  }
-  printf("========================\n");
 
   /* Get a database statistics */
-  /* MDB_stat stats; */
+  MDB_stat stats;
+  err = mdb_stat(txn, dbi, &stats);
+  if (err != MDB_SUCCESS) {
+    fprintf(stderr, "Can't retrieve the database statistics: %s\n", mdb_strerror(err));
+  } else {
+    printf("[MDB database statistics]\n");
+    printf("=========================\n");
+    printf("> Size of database page:        %u\n", stats.ms_psize);
+    printf("> Depth of the B-tree:          %u\n", stats.ms_depth);
+    printf("> Number of items in databases: %d\n", (int)stats.ms_entries);
+    printf("=========================\n");
+  }
 
   /* Clean the allocated resources for an opened environment */
   mdb_cursor_close(cursor);
