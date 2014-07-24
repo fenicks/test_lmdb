@@ -22,7 +22,7 @@ You need `GCC` and `make`.
 
 ### Output
 
-    $ ./test_lmdb lmdb_databases
+    $ ./test_lmdb $HOME/me/lmdb_databases
     Our data store directory is 'lmdb_databases'
     [MDB database content]
     ======================
