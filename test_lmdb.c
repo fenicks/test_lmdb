@@ -6,8 +6,11 @@
 /**
  * Test application with LMDB database
  * > LMDB: Lightning Memory-mapped DataBase
- * ######################################
+ * #####################################################
  * Just a test app for playing with LMDB.
+ * 
+ * /!\ This code is not production ready!
+ * /!\ It was the best way to understand LMDB C library.
  */
 
 static const char *store_dir = NULL;
