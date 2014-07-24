@@ -3,6 +3,13 @@
 
 #include "lmdb.h"
 
+/**
+ * Test application with LMDB database
+ * > LMDB: Lightning Memory-mapped DataBase
+ * ######################################
+ * Just a test app for playing with LMDB.
+ */
+
 static const char *store_dir = NULL;
 static int  err              = 0;
 
