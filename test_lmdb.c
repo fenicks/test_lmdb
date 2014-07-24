@@ -27,7 +27,7 @@ int main(int ac, char **ag) {
   MDB_env *env;
   err = mdb_env_create(&env);
   if (err != MDB_SUCCESS) {
-    fprintf(stderr, "%s\n", mdb_strerror(err));
+    fprintf(stderr, "Can't initialize a MDB environment: %s\n", mdb_strerror(err));
     return -42;
   }
 
@@ -87,7 +87,7 @@ int main(int ac, char **ag) {
     while ((err = mdb_cursor_get(cursor, &key, &value, MDB_NEXT)) == MDB_SUCCESS) {
       printf("key: %s\t- val: %s\n", (char*)key.mv_data, (char*)value.mv_data);
     }
-    printf("======================\n");
+    printf("======================\n\n");
   }
 
   /* Get a database statistics */
@@ -101,7 +101,7 @@ int main(int ac, char **ag) {
     printf("> Size of database page:        %u\n", stats.ms_psize);
     printf("> Depth of the B-tree:          %u\n", stats.ms_depth);
     printf("> Number of items in databases: %d\n", (int)stats.ms_entries);
-    printf("=========================\n");
+    printf("=========================\n\n");
   }
 
   /* Clean the allocated resources for an opened environment */
