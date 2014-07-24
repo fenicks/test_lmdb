@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
   /* Clean the allocated resources for an opened environment */
   mdb_cursor_close(cursor);
   mdb_dbi_close(env, dbi);
-  mdb_txn_abort(txn);
+  mdb_txn_commit(txn);
   mdb_env_close(env);
 
   printf("Easy, very easy isn't it?\n");
