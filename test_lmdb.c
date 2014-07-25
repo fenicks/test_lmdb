@@ -62,8 +62,8 @@ int main(int argc, char **argv) {
   /* Handling keys and data */
   MDB_val key, value;
 
-  const char * data_k[3] = {"user:1:nickname", "user:1:email"   , "user:1:created_at"};
-  const char * data_v[3] = {"fenicks"        , "fenicks@lmdb.db", "1977-04-22T06:00:00Z"};
+  const char *data_k[3] = {"user:1:nickname", "user:1:email"   , "user:1:created_at"};
+  const char *data_v[3] = {"fenicks"        , "fenicks@lmdb.db", "1977-04-22T06:00:00Z"};
 
   for (int iter = 0; iter < 3; ++iter) {
     key.mv_size   = sizeof(char*) * strlen(data_k[iter]);
