@@ -12,6 +12,8 @@ You need `GCC` and `make`.
 
 ## Compile the source code
 
+    git clone https://github.com/fenicks/test_lmdb.git
+    cd test_lmdb
     make
 
 ## Create the databases directory
