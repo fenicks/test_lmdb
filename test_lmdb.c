@@ -59,13 +59,14 @@ int main(int argc, char **argv) {
     return -42;
   }
 
+  /* Storage data sample */
+  const char *data_k[]    = {"user:1:nickname", "user:1:email"   , "user:1:created_at"};
+  const char *data_v[]    = {"fenicks"        , "fenicks@lmdb.db", "1977-04-22T06:00:00Z"};
+  const int  NUM_ELEMENTS = 3;
+
   /* Handling keys and data */
   MDB_val key, value;
-
-  const char *data_k[3] = {"user:1:nickname", "user:1:email"   , "user:1:created_at"};
-  const char *data_v[3] = {"fenicks"        , "fenicks@lmdb.db", "1977-04-22T06:00:00Z"};
-
-  for (int iter = 0; iter < 3; ++iter) {
+  for (int iter = 0; iter < NUM_ELEMENTS; ++iter) {
     key.mv_size   = sizeof(char*) * strlen(data_k[iter]);
     key.mv_data   = (void*)data_k[iter];
 
