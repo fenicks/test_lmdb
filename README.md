@@ -2,7 +2,7 @@
 
 LMDB test application in **C**.
 This code is not production ready but helps me to understand how LMDB works.
-A simple main function with 99 lines of code is not a good things but it's easy to read for a beginner.
+A simple main function with 99 lines of code is not a good thing but it's easy to read for a beginner.
 
 # Requirements
 
