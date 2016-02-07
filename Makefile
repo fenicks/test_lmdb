@@ -1,7 +1,7 @@
 # Makefile for LMDB test application
 
 CC  = gcc
-CFLAGS  = -W -Wall -Wabi -std=c1x -pedantic -O3
+CFLAGS  = -W -Wall -Wabi -std=c1x -pedantic -O2
 LDFLAGS = -lc -pthread
 
 progname = test_lmdb
